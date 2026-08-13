@@ -1,0 +1,88 @@
+{
+    "primitive_types": {
+        "normal_string": "Hello World test content",
+        "escaped_string": "line\nbreak\ttab\rback\bform\fquote\"backslash\\slash/",
+        "unicode_escape": "\u4E2D\u6587\uFF01\u0031\u0032\u0033",
+        "empty_string": "",
+        "positive_integer": 123456,
+        "negative_integer": -789,
+        "float_decimal": 3.1415926,
+        "negative_float": -0.618,
+        "sci_positive": 1.2E3,
+        "sci_negative": -9.8e-2,
+        "bool_true": true,
+        "bool_false": false,
+        "null_value": null
+    },
+    "nested_objects": {
+        "level1": {
+            "level2": {
+                "level3_final": "deep nested object test"
+            }
+        }
+    },
+    "array_scenarios": {
+        "empty_array": [],
+        "flat_array": [
+            1,
+            2,
+            "three",
+            false,
+            null
+        ],
+        "2d_nested_array": [
+            [
+                11,
+                12
+            ],
+            [
+                22,
+                23
+            ]
+        ],
+        "object_inside_array": [
+            {
+                "id": 1,
+                "name": "Zhang San"
+            },
+            {
+                "id": 2,
+                "name": "Li Si"
+            }
+        ],
+        "mixed_deep_array": [
+            1,
+            [
+                "a",
+                null
+            ],
+            {
+                "key": true
+            }
+        ]
+    },
+    "special_key_cases": {
+        "normal_key": 1,
+        "key_with_space": 2,
+        "key_special_symbols_!@#$%^&*()": 3,
+        "key_numeric_string_123": 4,
+        "empty_string_key": 5
+    },
+    "empty_containers": {
+        "empty_object": {},
+        "object_with_empty_array": {
+            "arr": []
+        },
+        "array_with_empty_object": [
+            {}
+        ]
+    },
+    "root_top_level_values": [
+        "standalone_string",
+        999,
+        false,
+        null,
+        [],
+        {}
+    ]
+}

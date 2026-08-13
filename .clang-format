@@ -1,0 +1,188 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+Standard: Latest
+
+# ==================== 缩进与行宽 ====================
+# 缩进使用 4 个空格（大厂普遍采用，Google 原版为 2）
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+# 每行最大字符数 100（Google 原版为 80，宽屏环境下推荐 100-120）
+ColumnLimit: 100
+
+# 换行后续行缩进宽度
+ContinuationIndentWidth: 4
+
+# ==================== 大括号风格 ====================
+# Attach 风格：左大括号与语句同行（Google 标准）
+BreakBeforeBraces: Attach
+
+# 自定义细粒度大括号规则（如需 Allman 风格可修改）
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+# ==================== 指针与引用对齐 ====================
+# 指针/引用符号靠左（靠近类型），Google 标准
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# ==================== 空格规则 ====================
+# 控制语句（if/for/while）后加空格，函数名后不加
+SpaceBeforeParens: ControlStatements
+
+# 空括号内不留空格
+SpaceInEmptyParentheses: false
+
+# 尖括号内不留空格
+SpacesInAngles: Never
+
+# 圆括号内侧不留空格
+SpacesInParentheses: false
+
+# 方括号内侧不留空格
+SpacesInSquareBrackets: false
+
+# 赋值运算符两侧空格
+SpaceAroundPointerQualifiers: Default
+
+# ==================== 对齐规则 ====================
+# 开括号后对齐
+AlignAfterOpenBracket: Align
+
+# 操作数对齐
+AlignOperands: Align
+
+# 尾随注释对齐
+AlignTrailingComments: true
+
+# 连续赋值不对齐（避免过度对齐导致维护成本高）
+AlignConsecutiveAssignments: None
+
+# 连续声明不对齐
+AlignConsecutiveDeclarations: None
+
+# 连续宏定义跨空行对齐
+AlignConsecutiveMacros: AcrossEmptyLines
+
+# 反斜杠换行左对齐
+AlignEscapedNewlines: Left
+
+# ==================== 换行策略 ====================
+# 函数参数不打包，每行一个（大厂推荐，便于 diff 和代码审查）
+BinPackArguments: false
+BinPackParameters: false
+
+# 允许所有参数放同一行（仅当全部能放下时）
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# 构造函数初始化列表：逗号前换行
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 4
+
+# 继承列表逗号前换行
+BreakInheritanceList: BeforeComma
+
+# 二元运算符换行后放在行尾
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+
+# ==================== 短代码块规则 ====================
+# 仅空函数允许单行
+AllowShortFunctionsOnASingleLine: Empty
+
+# 禁止短 if 单行（强制大括号，Google 规范）
+AllowShortIfStatementsOnASingleLine: Never
+
+# 禁止短循环单行
+AllowShortLoopsOnASingleLine: false
+
+# 禁止短块单行
+AllowShortBlocksOnASingleLine: Never
+
+# Lambda 内联时允许单行
+AllowShortLambdasOnASingleLine: Inline
+
+# ==================== 命名空间 ====================
+# 命名空间内容不缩进（Google 标准）
+NamespaceIndentation: None
+
+# 自动添加命名空间结束注释
+FixNamespaceComments: true
+ShortNamespaceLines: 1
+
+# ==================== 类与访问修饰符 ====================
+# 访问修饰符（public/private/protected）左移 4 空格
+AccessModifierOffset: -4
+
+# case 标签缩进
+IndentCaseLabels: true
+
+# 类成员按访问块分组
+SeparateDefinitionBlocks: Always
+
+# ==================== Include 排序 ====================
+# 区分大小写排序
+SortIncludes: CaseSensitive
+
+# 保留 include 块划分（不打乱项目分层）
+IncludeBlocks: Preserve
+
+# include 分类优先级
+IncludeCategories:
+  - Regex: '^<.*\.h>'
+    Priority: 1
+    SortPriority: 0
+    CaseSensitive: false
+  - Regex: "^<.*"
+    Priority: 2
+    SortPriority: 0
+    CaseSensitive: false
+  - Regex: ".*"
+    Priority: 3
+    SortPriority: 0
+    CaseSensitive: false
+
+# ==================== 现代 C++ 特性 ====================
+# C++11 列表初始化风格（true = 内侧无空格）
+Cpp11BracedListStyle: true
+
+# 推导返回类型缩进
+IndentWrappedFunctionNames: false
+
+# ==================== 空行与注释 ====================
+# 最大连续空行数
+MaxEmptyLinesToKeep: 1
+
+# 块开头不留空行
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# 注释自动重排
+ReflowComments: true
+
+# ==================== 宏与预处理 ====================
+# 缩进预处理指令
+IndentPPDirectives: AfterHash
+
+# ==================== 枚举与位域 ====================
+# 位域对齐
+AlignConsecutiveBitFields: None

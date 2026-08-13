@@ -1,0 +1,56 @@
+{
+    // ========== 编辑器基础规范 ==========
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.rulers": [120],
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.encoding": "utf8",
+    "files.eol": "\r\n",
+
+    // ========== 文件过滤：减少无效索引与侧边栏干扰 ==========
+    "files.exclude": {
+        "**/.git": true,
+        "**/build": true,
+        "**/build-*": true,
+        "**/out": true,
+        "**/.cmake": true
+    },
+    "search.exclude": {
+        "**/build": true,
+        "**/build-*": true
+    },
+
+    // ========== clangd 智能提示（核心优化） ==========
+    // 使用 clangd 扩展时，必须禁用微软 C/C++ 插件的默认 IntelliSense，避免双索引卡顿、提示冲突
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.arguments": [
+        // 绑定 CMake 生成的编译数据库，索引完全对齐实际编译参数
+        "--compile-commands-dir=${workspaceFolder}/build",
+        // 关闭 IWYU 激进头文件自动插入，避免 Windows SDK/MSVC STL 场景下误插内部头、漏宏依赖
+        "--header-insertion=never",
+        // 全作用域补全：无需提前写 using，直接补全全局命名空间符号
+        "--all-scopes-completion",
+        // 补全详情：显示完整函数签名与参数说明
+        "--completion-style=detailed",
+        // 预编译头存入内存，大幅提升大项目索引速度（内存≥16G 推荐）
+        "--pch-storage=memory",
+        // 开启 clang-tidy 静态检查（配合项目根目录 .clang-tidy 配置文件）
+        "--clang-tidy",
+        // 仅输出错误日志，减少输出面板噪音
+        "--log=error"
+    ],
+
+    // ========== CMake 配置（与 Presets 无冲突） ==========
+    "cmake.configureOnOpen": true,
+    // 构建目录：仅作为无 Preset 时的默认值，优先以 CMakePresets.json 中 binaryDir 为准
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    // 生成编译数据库，clangd 必需
+    "cmake.configureArgs": [
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+    ],
+    // 并行编译核数：自动匹配 CPU 核心数，也可手动写数字如 "8"
+    "cmake.parallelJobs": 0
+}

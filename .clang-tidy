@@ -1,0 +1,145 @@
+---
+# 检查集配置：先全量禁用，再按需启用，避免默认规则干扰
+Checks: >
+  -*
+  # 主流检查模块全量启用
+  ,bugprone-*
+  ,modernize-*
+  ,performance-*
+  ,readability-*
+  ,google-*
+  ,cppcoreguidelines-*
+  ,misc-*
+  ,portability-*
+  ,clang-analyzer-*
+
+  # ========== 禁用不符合工程实践的检查项 ==========
+  # 魔术数字：业务代码广泛使用，仅建议在公共常量文件中人工约束
+  ,-readability-magic-numbers
+  ,-cppcoreguidelines-avoid-magic-numbers
+
+  # 放宽底层操作限制（底层/跨平台代码常用，团队自行人工审核）
+  ,-cppcoreguidelines-pro-type-reinterpret-cast
+  ,-cppcoreguidelines-pro-bounds-pointer-arithmetic
+  ,-cppcoreguidelines-pro-bounds-array-to-pointer-decay
+
+  # 允许 goto（错误处理、资源统一释放场景是行业通用实践）
+  ,-cppcoreguidelines-avoid-goto
+
+  # 不强制尾置返回类型（Google 规范不做强制要求）
+  ,-modernize-use-trailing-return-type
+
+  # 不强制使用 auto（避免过度使用降低代码可读性，由开发者按需使用）
+  ,-modernize-use-auto
+
+  # 放宽 int 类型限制（业务代码 int 广泛使用，不强制 int32_t 等固定宽度）
+  ,-google-runtime-int
+
+  # 不强制 noexcept（旧代码兼容成本高，仅建议新代码遵循）
+  ,-modernize-use-noexcept
+
+  # 禁用函数长度硬限制（业务逻辑复杂度灵活，用圈复杂度替代）
+  ,-readability-function-size
+
+  # 禁用注释标点强制检查（避免与团队注释风格冲突）
+  ,-readability-comment-punctuation
+
+  # 放宽命名空间深度限制（业务模块分层可能超过 2 层）
+  ,-google-build-namespaces
+
+# ========== 检查项参数定制 ==========
+CheckOptions:
+  # ------------------------------
+  # 1. 命名规范：严格对齐 Google + 大厂通用约定
+  # ------------------------------
+  # 类型名（类/结构体/枚举/联合/类型别名）：大驼峰 PascalCase
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+
+  # 函数/方法名：小驼峰 camelBack
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+  - key: readability-identifier-naming.MethodCase
+    value: camelBack
+
+  # 普通变量：小写+下划线 snake_case
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+
+  # 类成员变量：小写+下划线后缀（Google 标准；如需 m_ 前缀可改 MemberPrefix）
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+  - key: readability-identifier-naming.MemberPrefix
+    value: m_
+
+  # 全局常量：k 前缀 + 大驼峰（Google 标准）
+  - key: readability-identifier-naming.ConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstantPrefix
+    value: k
+
+  # 枚举值：k 前缀 + 大驼峰
+  - key: readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+
+  # 宏定义：全大写+下划线
+  - key: readability-identifier-naming.MacroCase
+    value: UPPER_CASE
+
+  # 全局变量：小写+下划线（不推荐使用全局变量，此处仅统一样式）
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: lower_case
+
+  # ------------------------------
+  # 2. 可读性与复杂度约束
+  # ------------------------------
+  # 函数认知复杂度阈值，超过则告警（大厂通常设 20-30）
+  - key: readability-function-cognitive-complexity.Threshold
+    value: "25"
+
+  # ------------------------------
+  # 3. 现代 C++ 检查参数
+  # ------------------------------
+  # emplace 优化：不忽略隐式构造场景
+  - key: modernize-use-emplace.IgnoreImplicitConstructors
+    value: "false"
+
+  # 范围 for 循环转换：合理置信度
+  - key: modernize-loop-convert.MinConfidence
+    value: reasonable
+
+  # ------------------------------
+  # 4. 性能检查参数
+  # ------------------------------
+  # 字符串拼接效率检查：非严格模式
+  - key: performance-inefficient-string-concatenation.StrictMode
+    value: "false"
+
+  # ------------------------------
+  # 5. Google 规范专项
+  # ------------------------------
+  # 命名空间结束注释规则
+  - key: google-readability-namespace-comments.ShortNamespaceLines
+    value: "1"
+  - key: google-readability-namespace-comments.SpacesBeforeComments
+    value: "2"
+
+# ========== 全局配置 ==========
+# 仅检查项目源码头文件，过滤第三方库
+HeaderFilterRegex: '^(src|include)/.*\.(h|hpp|hxx)$'
+# 不检查系统头文件
+SystemHeaders: false
+# 格式化风格：复用同目录 .clang-format 配置，保证格式统一
+FormatStyle: file
+# 警告升级为错误（CI 门禁可开启，本地开发建议关闭）
+WarningsAsErrors: ""
