@@ -28,11 +28,11 @@ endif()
 set(JSON_PARSER_SOURCES
     src/lexer.cpp
     src/parser.cpp
-    src/value.cpp
     src/serializer.cpp
 )
 
 set(JSON_PARSER_HEADERS
+    include/common.hpp
     include/lexer.hpp
     include/parser.hpp
     include/value.hpp

@@ -47,6 +47,9 @@ Checks: >
   # 放宽命名空间深度限制（业务模块分层可能超过 2 层）
   ,-google-build-namespaces
 
+  # 不强制使用using
+  ,-modernize-use-using
+
 # ========== 检查项参数定制 ==========
 CheckOptions:
   # ------------------------------

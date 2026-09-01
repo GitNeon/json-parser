@@ -13,10 +13,6 @@
     // ========== 文件过滤：减少无效索引与侧边栏干扰 ==========
     "files.exclude": {
         "**/.git": true,
-        "**/build": true,
-        "**/build-*": true,
-        "**/out": true,
-        "**/.cmake": true
     },
     "search.exclude": {
         "**/build": true,
