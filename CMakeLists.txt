@@ -26,17 +26,19 @@ endif()
 # ============================================================
 
 set(JSON_PARSER_SOURCES
+    src/common.cpp
     src/lexer.cpp
     src/parser.cpp
     src/serializer.cpp
+    src/value.cpp
 )
 
 set(JSON_PARSER_HEADERS
     include/common.hpp
     include/lexer.hpp
     include/parser.hpp
-    include/value.hpp
     include/serializer.hpp
+    include/value.hpp
 )
 
 # ============================================================
@@ -117,9 +119,41 @@ message(STATUS "============================================================")
 message(STATUS "")
 
 # ==============================
-# 可执行程序：demo 示例入口
+# 可执行程序：示例入口
 # ==============================
 add_executable(my-json main.cpp)
 
 # 让可执行程序链接我们刚才写的静态库 json-parser
 target_link_libraries(my-json PRIVATE json-parser)
+
+
+# ============================================================
+# 单元测试
+# ============================================================
+
+# include(CTest) 会定义 BUILD_TESTING 选项（默认 ON），并自动调用 enable_testing()
+include(CTest)
+
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
+
+# ============================================================
+# clangd 支持：自动生成项目根 .clangd
+# ============================================================
+
+# compile_commands.json 生成在构建目录（binaryDir）内，clangd 默认无法发现，
+# 会退回无任何 include 路径的 fallback 模式，导致 gtest 等头文件解析失败。
+# 这里在每次 configure 时生成项目根 .clangd，指向当前构建目录。
+#
+# 注意事项：
+#   1. 切换预设后需重新 configure（cmake --preset <name>）才会更新此文件；
+#   2. 本文件为自动生成物（已加入 .gitignore），手动修改会在下次 configure 时被覆盖，
+#      如需追加 clangd 自定义配置，请改用 ~/.config/clangd/config.yaml 等用户级配置。
+file(RELATIVE_PATH CLANGD_DB_DIR_REL
+    ${PROJECT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+file(WRITE ${PROJECT_SOURCE_DIR}/.clangd
+    "# 由 CMake 配置阶段自动生成，请勿手动修改（见根 CMakeLists.txt）\n"
+    "CompileFlags:\n"
+    "  CompilationDatabase: ${CLANGD_DB_DIR_REL}\n")
+message(STATUS "clangd         : .clangd -> ${CLANGD_DB_DIR_REL}/compile_commands.json")

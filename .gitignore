@@ -31,6 +31,9 @@ Makefile
 compile_commands.json
 CTestTestfile.cmake
 
+# clangd（由根 CMakeLists.txt 在 configure 阶段自动生成）
+.clangd
+
 # 包管理
 vcpkg_installed/
 _vcpkg/
@@ -38,3 +41,6 @@ _vcpkg/
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 其他文件
+.workbuddy

@@ -57,8 +57,10 @@
             ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang-cl",
                 "CMAKE_CXX_COMPILER": "clang-cl",
-                "CMAKE_CXX_FLAGS_DEBUG": "/Zi /Od /Oy-"
+                "CMAKE_CXX_FLAGS_DEBUG": "/Zi /Od /Oy-",
+                "CMAKE_C_FLAGS_DEBUG": "/Zi /Od /Oy-"
             }
         },
         {

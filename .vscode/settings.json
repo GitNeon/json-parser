@@ -23,8 +23,10 @@
     // 使用 clangd 扩展时，必须禁用微软 C/C++ 插件的默认 IntelliSense，避免双索引卡顿、提示冲突
     "C_Cpp.intelliSenseEngine": "disabled",
     "clangd.arguments": [
-        // 绑定 CMake 生成的编译数据库，索引完全对齐实际编译参数
-        "--compile-commands-dir=${workspaceFolder}/build",
+        // 编译数据库位置不在此指定：CMake configure 时会自动生成项目根 .clangd，
+        // 指向当前激活 preset 的构建目录（如 build/clang-debug/compile_commands.json）。
+        // 注意 --compile-commands-dir 优先级高于 .clangd，若在此硬编码 build/ 会导致
+        // clangd 找不到数据库、退化为无 include 路径的裸解析（gtest/gtest.h not found）。
         // 关闭 IWYU 激进头文件自动插入，避免 Windows SDK/MSVC STL 场景下误插内部头、漏宏依赖
         "--header-insertion=never",
         // 全作用域补全：无需提前写 using，直接补全全局命名空间符号
