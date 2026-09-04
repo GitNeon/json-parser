@@ -56,7 +56,7 @@ TEST(JsonValueTest, DefaultIsNull) {
 GoogleTest 的组织结构是三层，从大到小：
 
 | 层级 | 概念 | 类比 | 数量关系 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | 测试套件（Test Suite） | 文件夹 | 一个套件包含多个测试 |
 | 2 | 测试（Test） | 文件 | 一个测试包含多个断言 |
 | 3 | 断言（Assertion） | 文件里的每一行检查 | 最小单位，判定通过/失败 |
@@ -78,7 +78,7 @@ GoogleTest 的组织结构是三层，从大到小：
 每个断言宏都有 `EXPECT_` 和 `ASSERT_` 两个版本：
 
 | 版本 | 失败后行为 | 适用场景 |
-|---|---|---|
+| --- | --- | --- |
 | `EXPECT_*` | 标记失败，**继续执行**后面的断言 | 大多数场景（默认用它） |
 | `ASSERT_*` | 标记失败，**立即终止当前测试** | 后续代码依赖该结果（如指针非空检查） |
 
@@ -96,7 +96,7 @@ TEST(Example, ExpectVsAssert) {
 ### 3.2 常用断言速查表
 
 | 断言宏 | 含义（通过条件） |
-|---|---|
+| --- | --- |
 | `EXPECT_TRUE(x)` / `EXPECT_FALSE(x)` | x 为真 / 假 |
 | `EXPECT_EQ(a, b)` / `EXPECT_NE(a, b)` | a == b / a != b |
 | `EXPECT_LT(a, b)`、`EXPECT_LE`、`EXPECT_GT`、`EXPECT_GE` | a < b、a <= b、a > b、a >= b |
@@ -226,7 +226,7 @@ TEST_F(ParserTest, ParsesStringValue) {
 ### SetUp 与构造函数的区别
 
 | 方式 | 调用时机 | 能否感知派生类成员 | 推荐 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 构造函数 | 对象创建时 | 否（派生类成员未初始化） | 简单初始化 |
 | `SetUp()` | 每个测试运行前 | 是 | 需要用到派生类状态时 |
 
@@ -309,7 +309,7 @@ add_test(NAME test_json_value COMMAND test_json_value)
 逐行解读关键点：
 
 | 配置 | 作用 |
-|---|---|
+| --- | --- |
 | `FetchContent_MakeAvailable(googletest)` | 把 GoogleTest 作为子项目下载并编译，产出 `GTest::gtest`、`GTest::gtest_main` 等目标 |
 | `URL .../googletest-1.14.0.zip` | 当前指向本地 zip（离线可用）；注释里保留了在线拉取地址，网络好时可切回 |
 | `GTest::gtest_main` | **自动提供 `main()` 函数**，这就是测试文件不用写 main 的原因。如果链接 `GTest::gtest`（不带 main），就必须自己写 main 并调用 `RUN_ALL_TESTS()` |
@@ -334,7 +334,7 @@ target_link_libraries(test_lexer PRIVATE
 add_test(NAME test_lexer COMMAND test_lexer)
 ```
 
-3. 重新 configure + build，即可被 `ctest` 收集到。
+1. 重新 configure + build，即可被 `ctest` 收集到。
 
 > 根目录 `CMakeLists.txt` 中 `include(CTest)` + `if(BUILD_TESTING)` 的组合意味着：
 > 加 `-DBUILD_TESTING=OFF` 可以完全不编译测试（加快纯开发构建）。
@@ -471,7 +471,7 @@ EXPECT_DEATH(serialize(nullptr), ".*");
 ## 10. 常见坑与排错
 
 | 现象/错误 | 原因与解决 |
-|---|---|
+| --- | --- |
 | `undefined reference to 'main'` | 链接了 `GTest::gtest` 而不是 `GTest::gtest_main`，或两个都没链 |
 | 中文注释编译报错（MSVC） | 本项目已配置 `/utf-8`，若新增编译单元仍报错，确认文件编码为 UTF-8（无 BOM） |
 | 测试里改了静态变量，影响其他测试 | 测试间共享全局/静态状态导致污染；把状态移入夹具类成员（每个测试独立一份） |
