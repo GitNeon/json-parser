@@ -1,18 +1,12 @@
 #pragma once
 
 #include <cstdint>
-#include <stdexcept>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
 #include "common.hpp"
-
-// 自定义异常
-class JsonValueException : public std::runtime_error {
-public:
-    explicit JsonValueException(const std::string& msg) : std::runtime_error(msg) {}
-};
+#include "exceptions.hpp"
 
 // 枚举定义：JSON的六种数据类型
 enum class JsonType : std::uint8_t {
@@ -211,35 +205,35 @@ inline bool JsonValue::isObject() const noexcept {
 // 取值
 inline bool& JsonValue::asBool() {
     if (!isBool()) {
-        throw JsonValueException("类型不匹配，期望 Bool 类型");
+        throw JsonValueException("type mismatch: expected Bool");
     }
     return std::get<bool>(m_data);
 }
 
 inline const bool& JsonValue::asBool() const {
     if (!isBool()) {
-        throw JsonValueException("类型不匹配，期望 Bool 类型");
+        throw JsonValueException("type mismatch: expected Bool");
     }
     return std::get<bool>(m_data);
 }
 
 inline double& JsonValue::asNumber() {
     if (!isNumber()) {
-        throw JsonValueException("类型不匹配，期望 Number 类型");
+        throw JsonValueException("type mismatch: expected Number");
     }
     return std::get<double>(m_data);
 }
 
 inline const double& JsonValue::asNumber() const {
     if (!isNumber()) {
-        throw JsonValueException("类型不匹配，期望 Number 类型");
+        throw JsonValueException("type mismatch: expected Number");
     }
     return std::get<double>(m_data);
 }
 
 inline std::string& JsonValue::asString() {
     if (!isString()) {
-        throw JsonValueException("类型不匹配，期望 String 类型");
+        throw JsonValueException("type mismatch: expected String");
     }
     return std::get<std::string>(m_data);
 }
@@ -247,35 +241,35 @@ inline std::string& JsonValue::asString() {
 // 补充到 asString() 非 const 实现之后
 inline const std::string& JsonValue::asString() const {
     if (!isString()) {
-        throw JsonValueException("类型不匹配，期望 String 类型");
+        throw JsonValueException("type mismatch: expected String");
     }
     return std::get<std::string>(m_data);
 }
 
 inline std::vector<JsonValue>& JsonValue::asArray() {
     if (!isArray()) {
-        throw JsonValueException("类型不匹配，期望 Array 类型");
+        throw JsonValueException("type mismatch: expected Array");
     }
     return std::get<std::vector<JsonValue>>(m_data);
 }
 
 inline const std::vector<JsonValue>& JsonValue::asArray() const {
     if (!isArray()) {
-        throw JsonValueException("类型不匹配，期望 Array 类型");
+        throw JsonValueException("type mismatch: expected Array");
     }
     return std::get<std::vector<JsonValue>>(m_data);
 }
 
 inline std::unordered_map<std::string, JsonValue>& JsonValue::asObject() {
     if (!isObject()) {
-        throw JsonValueException("类型不匹配，期望 Object 类型");
+        throw JsonValueException("type mismatch: expected Object");
     }
     return std::get<std::unordered_map<std::string, JsonValue>>(m_data);
 }
 
 inline const std::unordered_map<std::string, JsonValue>& JsonValue::asObject() const {
     if (!isObject()) {
-        throw JsonValueException("类型不匹配，期望 Object 类型");
+        throw JsonValueException("type mismatch: expected Object");
     }
     return std::get<std::unordered_map<std::string, JsonValue>>(m_data);
 }
@@ -293,7 +287,7 @@ inline JsonValue& JsonValue::at(size_t index) {
     std::vector<JsonValue>& arr = asArray();
 
     if (index >= arr.size()) {
-        throw JsonValueException("数组下标越界");
+        throw JsonValueException("array index out of range");
     }
     return asArray()[index];
 }
@@ -301,7 +295,7 @@ inline JsonValue& JsonValue::at(size_t index) {
 inline const JsonValue& JsonValue::at(size_t index) const {
     const auto& arr = asArray();
     if (index >= arr.size()) {
-        throw JsonValueException("数组下标越界");
+        throw JsonValueException("array index out of range");
     }
     return arr[index];
 }
@@ -321,7 +315,7 @@ inline JsonValue& JsonValue::at(const std::string& key) {
     auto& obj = asObject();
     auto iter = obj.find(key);
     if (iter == obj.end()) {
-        throw JsonValueException("对象中键不存在：" + key);
+        throw JsonValueException("object key not found: " + key);
     }
     return iter->second;
 }
@@ -330,7 +324,7 @@ inline const JsonValue& JsonValue::at(const std::string& key) const {
     const auto& obj = asObject();
     auto iter = obj.find(key);
     if (iter == obj.end()) {
-        throw JsonValueException("对象中键不存在：" + key);
+        throw JsonValueException("object key not found: " + key);
     }
     return iter->second;
 }

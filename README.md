@@ -164,6 +164,8 @@ json_parser/
 
 - 支持一键编译、运行所有测试用例，校验解析器正确性
 
+- 单元测试分两条线：GoogleTest 用例（`tests/`）与手写 main 测试（`tests/standalone/`），可通过 CTest 标签 `-L gtest` / `-L standalone` 分别运行
+
 ### 5\.4 代码规范配置
 
 - `.clang-format`：统一代码缩进、括号风格、命名排版、空行规范，全员一致编码风格

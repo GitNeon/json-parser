@@ -9,7 +9,7 @@
         {
             "name": "base",
             "hidden": true,
-            "description": "基础配置，供其他预设继承",
+            "description": "Base configuration inherited by other presets",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
@@ -23,7 +23,7 @@
         {
             "name": "gcc-debug",
             "displayName": "GCC Debug",
-            "description": "GCC 编译器 Debug 构建",
+            "description": "GCC Debug build",
             "inherits": [
                 "base"
             ],
@@ -37,7 +37,7 @@
         {
             "name": "gcc-release",
             "displayName": "GCC Release",
-            "description": "GCC 编译器 Release 构建",
+            "description": "GCC Release build",
             "inherits": [
                 "base"
             ],
@@ -51,7 +51,7 @@
         {
             "name": "clang-debug",
             "displayName": "Clang Debug",
-            "description": "Clang 编译器 Debug 构建",
+            "description": "Clang Debug build",
             "inherits": [
                 "base"
             ],
@@ -66,7 +66,7 @@
         {
             "name": "clang-release",
             "displayName": "Clang Release",
-            "description": "Clang 编译器 Release 构建",
+            "description": "Clang Release build",
             "inherits": [
                 "base"
             ],
@@ -83,29 +83,29 @@
         {
             "name": "gcc-debug",
             "configurePreset": "gcc-debug",
-            "displayName": "构建 GCC Debug"
+            "displayName": "Build GCC Debug"
         },
         {
             "name": "gcc-release",
             "configurePreset": "gcc-release",
-            "displayName": "构建 GCC Release"
+            "displayName": "Build GCC Release"
         },
         {
             "name": "clang-debug",
             "configurePreset": "clang-debug",
-            "displayName": "构建 Clang Debug"
+            "displayName": "Build Clang Debug"
         },
         {
             "name": "clang-release",
             "configurePreset": "clang-release",
-            "displayName": "构建 Clang Release"
+            "displayName": "Build Clang Release"
         }
     ],
     "testPresets": [
         {
             "name": "gcc-debug",
             "configurePreset": "gcc-debug",
-            "displayName": "测试 GCC Debug",
+            "displayName": "Test GCC Debug",
             "output": {
                 "outputOnFailure": true,
                 "verbosity": "default"
@@ -114,7 +114,7 @@
         {
             "name": "clang-debug",
             "configurePreset": "clang-debug",
-            "displayName": "测试 Clang Debug",
+            "displayName": "Test Clang Debug",
             "output": {
                 "outputOnFailure": true,
                 "verbosity": "default"

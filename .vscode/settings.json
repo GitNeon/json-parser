@@ -50,5 +50,8 @@
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
     ],
     // 并行编译核数：自动匹配 CPU 核心数，也可手动写数字如 "8"
-    "cmake.parallelJobs": 0
+    "cmake.parallelJobs": 0,
+    "cSpell.words": [
+        "endfunction"
+    ]
 }

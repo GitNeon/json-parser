@@ -226,7 +226,7 @@ TEST(JsonValueTest, ExceptionCarriesErrorMessage) {
     try {
         JsonValue v(true);
         v.asNumber();
-        FAIL() << "应抛出 JsonValueException";
+        FAIL() << "expected JsonValueException to be thrown";
     } catch (const JsonValueException& e) {
         EXPECT_NE(e.what(), nullptr);
         EXPECT_STRNE(e.what(), "");
