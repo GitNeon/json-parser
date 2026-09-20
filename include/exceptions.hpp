@@ -58,8 +58,29 @@ private:
     std::size_t m_column;
 };
 
-// 语法解析异常
+// 语法解析异常：携带出错位置（行号、列号均从 1 开始计数，取自出错 Token）
 class JsonParseException : public JsonException {
 public:
-    explicit JsonParseException(const std::string& msg) : JsonException(msg) {}
+    // 参数顺序与 JsonLexerException 保持一致，固定为 (行, 列, 消息)
+    JsonParseException(std::size_t line, std::size_t column, const std::string& msg)
+        : JsonException(buildMessage(line, column, msg)), m_line(line), m_column(column) {}
+
+    // 错误位置访问器：供测试断言、上层程序化处理使用，无需解析 what() 文本
+    MUST_USE std::size_t line() const noexcept {
+        return m_line;
+    }
+
+    MUST_USE std::size_t column() const noexcept {
+        return m_column;
+    }
+
+private:
+    // 构造时一次性拼好完整消息交给基类缓存，what() 直接由基类返回
+    static std::string buildMessage(std::size_t line, std::size_t column, const std::string& msg) {
+        return "Parser error: [line " + std::to_string(line) + " , column " +
+               std::to_string(column) + "]: " + msg;
+    }
+
+    std::size_t m_line;
+    std::size_t m_column;
 };

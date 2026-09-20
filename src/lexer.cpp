@@ -402,5 +402,13 @@ Token JsonLexer::readKeyword() {
         return Token{TokenType::True, word, start_line, start_column};
     }
 
+    if (word == "false") {
+        return Token{TokenType::False, word, start_line, start_column};
+    }
+
+    if (word == "null") {
+        return Token{TokenType::Null, word, start_line, start_column};
+    }
+
     throw JsonLexerException(start_line, start_column, "unknown keyword: " + word);
 }
