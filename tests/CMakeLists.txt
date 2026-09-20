@@ -35,6 +35,16 @@ target_link_libraries(test_json_lexer PRIVATE
 )
 
 # ============================================================
+# 测试目标：JsonParser
+# ============================================================
+add_executable(test_json_parser test_json_parser.cpp)
+
+target_link_libraries(test_json_parser PRIVATE
+    json-parser
+    GTest::gtest_main   # 提供 main()，测试文件里不用自己写
+)
+
+# ============================================================
 # 注册到 CTest
 # ============================================================
 
@@ -45,6 +55,8 @@ target_link_libraries(test_json_lexer PRIVATE
 # 方式二：每个测试可执行文件注册为一条测试
 add_test(NAME test_json_value COMMAND test_json_value)
 add_test(NAME test_json_lexer COMMAND test_json_lexer)
+add_test(NAME test_json_parser COMMAND test_json_parser)
 
 # 打上 gtest 标签，便于 ctest -L gtest 只跑 GoogleTest 用例
-set_tests_properties(test_json_value test_json_lexer PROPERTIES LABELS "gtest")
+set_tests_properties(test_json_value test_json_lexer test_json_parser
+    PROPERTIES LABELS "gtest")

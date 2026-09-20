@@ -37,16 +37,15 @@ void printToken(const Token& token) {
 void demoScanAll() {
     std::cout << "== 1. Scan all tokens ==\n";
 
-    // 一段包含对象、数组、字符串、整数、小数、指数、负数、布尔的典型 JSON。
-    // 注意：readKeyword() 目前只实现了 true，false / null 关键字支持尚在开发中，
-    // 这里暂不放入演示输入，待实现后可自行加入测试。
+    // 一段包含对象、数组、字符串、整数、小数、指数、负数、布尔、null 的典型 JSON。
     const std::string json = R"({
         "name": "Alice",
         "age": 30,
         "pi": 3.14e0,
         "score": -1.5,
         "isVip": true,
-        "hobbies": ["reading", "coding"]
+        "hobbies": ["reading", "coding"],
+        "extra": null
     })";
 
     std::cout << "source:\n" << json << "\ntokens:\n";

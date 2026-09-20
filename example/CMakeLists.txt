@@ -24,3 +24,6 @@ add_json_example(example_json_value example_json_value.cpp)
 
 # JsonLexer 用法示例
 add_json_example(example_json_lexer example_json_lexer.cpp)
+
+# JsonParser 用法示例
+add_json_example(example_json_parser example_json_parser.cpp)
