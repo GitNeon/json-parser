@@ -1,0 +1,37 @@
+{
+    // ============================================================
+    // 构建任务：供 launch.json 的 preLaunchTask 调用，
+    // 实现“按 F5 = 先编译、再进入调试”的一键流程。
+    // 任务名与 CMakePresets.json 中的构建预设一一对应。
+    // ============================================================
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake: build clang-debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset",
+                "clang-debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            // clang-cl 输出 MSVC 风格错误信息，使用内置 msCompile 匹配器，
+            // 编译报错会出现在“问题”面板并可直接点击跳转到源码
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        }
+    ]
+}

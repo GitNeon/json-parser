@@ -148,7 +148,7 @@ const std::array<BannerGlyph, 23> kBANNER = {{
 // 逐行拼接字形得到完整 Banner，分隔线宽度取最长行动态计算
 void printBanner() {
     std::vector<std::string> rows(kBannerRows);
-    for (const BannerGlyph& glyph : kBANNER) { 
+    for (const BannerGlyph& glyph : kBANNER) {
         for (size_t row = 0; row < kBannerRows; ++row) {
             rows[row] += glyph.m_rows.at(row);
         }

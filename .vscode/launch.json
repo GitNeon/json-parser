@@ -1,0 +1,56 @@
+{
+    // ============================================================
+    // VS Code 调试配置（由 C/C++ 扩展提供 cppvsdbg 调试器）
+    // ------------------------------------------------------------
+    // 本项目 Windows 原生工具链为 clang-cl（见 CMakePresets.json 的 clang-debug 预设），
+    // clang-cl 产出的是 CodeView/PDB 调试信息（build/clang-debug/*.pdb），
+    // 因此 type 必须用 cppvsdbg（Visual Studio Windows 调试器）；
+    // 不要用 cppdbg + GDB（本机无 gdb，且 gdb 无法解析 PDB）。
+    //
+    // 使用前提：先完成一次 CMake 配置（终端执行 cmake --preset clang-debug），
+    // 之后在“运行和调试”面板选中下方任一配置，按 F5 即可（会先自动编译）。
+    // ============================================================
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // 主程序：菜单式 REPL，需要键盘交互输入，故使用集成终端
+            "name": "Debug my-json (clang-cl)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/clang-debug/my-json.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "cmake: build clang-debug"
+        },
+        {
+            // 示例程序：example/ 下每个文件都是独立可执行程序
+            "name": "Debug example_json_parser (clang-cl)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/clang-debug/example/example_json_parser.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "cmake: build clang-debug"
+        },
+        {
+            // 单元测试（GoogleTest）：只想调试某个用例时改 args 即可，
+            // 例：{ "args": ["--gtest_filter=JsonParser*"] }
+            "name": "Debug test_json_parser (clang-cl)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/clang-debug/tests/test_json_parser.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "cmake: build clang-debug"
+        }
+    ]
+}
