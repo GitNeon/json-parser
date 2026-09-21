@@ -45,6 +45,17 @@ target_link_libraries(test_json_parser PRIVATE
 )
 
 # ============================================================
+# 测试目标：JsonSerializer
+# ============================================================
+
+add_executable(test_json_serializer test_json_serializer.cpp)
+
+target_link_libraries(test_json_serializer PRIVATE
+    json-parser
+    GTest::gtest_main   # 提供 main()，测试文件里不用自己写
+)
+
+# ============================================================
 # 注册到 CTest
 # ============================================================
 
@@ -56,7 +67,8 @@ target_link_libraries(test_json_parser PRIVATE
 add_test(NAME test_json_value COMMAND test_json_value)
 add_test(NAME test_json_lexer COMMAND test_json_lexer)
 add_test(NAME test_json_parser COMMAND test_json_parser)
+add_test(NAME test_json_serializer COMMAND test_json_serializer)
 
 # 打上 gtest 标签，便于 ctest -L gtest 只跑 GoogleTest 用例
-set_tests_properties(test_json_value test_json_lexer test_json_parser
+set_tests_properties(test_json_value test_json_lexer test_json_parser test_json_serializer
     PROPERTIES LABELS "gtest")
